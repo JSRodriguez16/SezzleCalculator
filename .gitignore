@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+!reports/test.mjs
+bin/
+/Backend/server
+*.exe
+*.test
+*.log
+*.tsbuildinfo
+.cache/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

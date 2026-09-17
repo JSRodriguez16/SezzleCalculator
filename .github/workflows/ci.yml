@@ -1,0 +1,54 @@
+name: Tests and build
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: Frontend/package-lock.json
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.26.x'
+          cache-dependency-path: Backend/go.mod
+      - name: Install frontend dependencies
+        working-directory: Frontend
+        run: npm ci
+      - name: Check Go formatting
+        run: |
+          unformatted=$(gofmt -l Backend)
+          if [ -n "$unformatted" ]; then
+            printf '%s\n' "$unformatted"
+            exit 1
+          fi
+      - name: Check Go code
+        working-directory: Backend
+        run: go vet ./...
+      - name: Run unit tests and generate reports
+        run: node reports/test.mjs
+      - name: Build frontend
+        if: ${{ !cancelled() }}
+        working-directory: Frontend
+        run: npm run build
+      - name: Build backend
+        if: ${{ !cancelled() }}
+        working-directory: Backend
+        run: go build -o ../bin/calculator .
+      - name: Upload test and coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14

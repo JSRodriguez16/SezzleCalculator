@@ -1,0 +1,17 @@
+sezzlecalculator/backend/business/calculator.go:29:	Calculate		100.0%
+sezzlecalculator/backend/business/calculator.go:81:	finite			100.0%
+sezzlecalculator/backend/exceptions/error.go:28:	Error			100.0%
+sezzlecalculator/backend/exceptions/error.go:31:	New			100.0%
+sezzlecalculator/backend/main.go:24:			main			100.0%
+sezzlecalculator/backend/main.go:31:			run			100.0%
+sezzlecalculator/backend/main.go:37:			runWithContext		100.0%
+sezzlecalculator/backend/presentation/handler.go:33:	NewHandler		100.0%
+sezzlecalculator/backend/presentation/handler.go:53:	ServeHTTP		100.0%
+sezzlecalculator/backend/presentation/handler.go:100:	calculate		100.0%
+sezzlecalculator/backend/presentation/handler.go:157:	writeDecodeError	100.0%
+sezzlecalculator/backend/presentation/handler.go:166:	methodNotAllowed	100.0%
+sezzlecalculator/backend/presentation/handler.go:171:	writeError		100.0%
+sezzlecalculator/backend/presentation/handler.go:196:	writeJSON		100.0%
+sezzlecalculator/backend/presentation/static.go:24:	openStatic		100.0%
+sezzlecalculator/backend/presentation/static.go:56:	serveStatic		100.0%
+total:							(statements)		100.0%
