@@ -19,36 +19,38 @@ jobs:
           cache-dependency-path: Frontend/package-lock.json
       - uses: actions/setup-go@v6
         with:
-          go-version: '1.26.x'
-          cache-dependency-path: Backend/go.mod
+          go-version: '1.24.x'
+          cache-dependency-path: |
+            go.work
+            Backend/go.mod
       - name: Install frontend dependencies
         working-directory: Frontend
         run: npm ci
       - name: Check Go formatting
         run: |
-          unformatted=$(gofmt -l Backend)
+          unformatted=$(find Backend -type f -name '*.go' -print0 | xargs -0 gofmt -l)
           if [ -n "$unformatted" ]; then
             printf '%s\n' "$unformatted"
             exit 1
           fi
       - name: Check Go code
-        working-directory: Backend
-        run: go vet ./...
+        run: go vet ./Backend/...
       - name: Run unit tests and generate reports
-        run: node reports/test.mjs
+        run: node Reports/test.mjs
       - name: Build frontend
         if: ${{ !cancelled() }}
         working-directory: Frontend
         run: npm run build
       - name: Build backend
         if: ${{ !cancelled() }}
-        working-directory: Backend
-        run: go build -o ../bin/calculator .
+        run: |
+          mkdir -p bin
+          go build -o bin/calculator ./Backend
       - name: Upload test and coverage reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
-          path: reports/
+          path: Reports/
           if-no-files-found: warn
           retention-days: 14

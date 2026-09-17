@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const backendDir = path.join(root, 'Backend');
-const reportsDir = path.join(root, 'reports');
+const reportsDir = path.join(root, 'Reports');
 const coverageTxtPath = path.join(reportsDir, 'coverage.txt');
 const tempProfilePath = path.join(reportsDir, 'coverage.tmp.out');
 const goBin = process.env.GO_BIN || 'go';

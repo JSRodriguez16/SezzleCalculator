@@ -1,7 +1,7 @@
 node_modules/
 dist/
 coverage/
-!reports/test.mjs
+!Reports/test.mjs
 bin/
 /Backend/server
 *.exe
